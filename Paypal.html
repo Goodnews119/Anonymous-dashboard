@@ -3,320 +3,499 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PayPal Receipt Generator</title>
+    <title>PayPal Receipt Generator | Shadow Nexus</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         }
         
         body {
-            background: #f6f8fa;
+            background: linear-gradient(135deg, #0f0f23, #1a1a2e, #16213e);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 20px;
+            color: #ffffff;
         }
-        
-        .warning-banner {
-            background: #ff4444;
-            color: white;
-            text-align: center;
-            padding: 12px;
-            font-size: 14px;
-            font-weight: 500;
-            border-radius: 8px 8px 0 0;
+
+        .glow-effect {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 80%, rgba(0, 114, 255, 0.1) 0%, transparent 50%),
+                       radial-gradient(circle at 80% 20%, rgba(100, 255, 218, 0.1) 0%, transparent 50%);
+            z-index: -1;
         }
-        
+
         .container {
             width: 100%;
-            max-width: 400px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            max-width: 450px;
+            background: rgba(15, 15, 25, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3),
+                        0 0 0 1px rgba(100, 255, 218, 0.1);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #0070ba, #00b4db, #64ffda);
+        }
+
+        .warning-banner {
+            background: linear-gradient(135deg, #ff6a00, #ee0979);
+            color: white;
+            text-align: center;
+            padding: 15px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+            position: relative;
             overflow: hidden;
         }
-        
+
+        .warning-banner::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
         .header {
-            background: #001c64;
+            background: linear-gradient(135deg, #001c64, #003087);
             color: white;
-            padding: 20px;
+            padding: 30px 20px;
             text-align: center;
+            position: relative;
+            overflow: hidden;
         }
-        
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+        }
+
         .header h1 {
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 8px;
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            position: relative;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
-        
+
+        .header h1::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #64ffda, #00b4db);
+            border-radius: 2px;
+        }
+
         .disclaimer {
-            font-size: 12px;
+            font-size: 13px;
             opacity: 0.9;
-            line-height: 1.4;
-            margin-bottom: 5px;
+            line-height: 1.5;
+            margin-bottom: 6px;
+            font-weight: 300;
         }
-        
+
         .form-section {
-            padding: 20px;
+            padding: 30px;
         }
-        
+
         .section-title {
             font-size: 16px;
             font-weight: 600;
-            color: #001c64;
-            margin-bottom: 15px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid #e1e8ed;
+            color: #64ffda;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(100, 255, 218, 0.2);
+            position: relative;
         }
-        
+
+        .section-title::before {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: #64ffda;
+            border-radius: 1px;
+        }
+
         .form-group {
-            margin-bottom: 16px;
+            margin-bottom: 20px;
         }
-        
+
         .form-group label {
             display: block;
             font-size: 14px;
             font-weight: 500;
-            color: #2d2d2d;
-            margin-bottom: 6px;
+            color: #e0e0e0;
+            margin-bottom: 8px;
+            transition: color 0.3s ease;
         }
-        
+
         .form-group input,
         .form-group select {
             width: 100%;
-            padding: 10px 12px;
-            border: 1px solid #d1d1d1;
-            border-radius: 6px;
+            padding: 14px 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
             font-size: 14px;
-            background: #fff;
+            background: rgba(255, 255, 255, 0.05);
+            color: #ffffff;
+            transition: all 0.3s ease;
         }
-        
+
         .form-group input:focus,
         .form-group select:focus {
             outline: none;
             border-color: #0070ba;
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 0 3px rgba(0, 112, 186, 0.2);
         }
-        
+
+        .form-group input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
         .checkbox-group {
             display: flex;
             align-items: flex-start;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             font-size: 12px;
-            color: #666;
+            color: rgba(255, 255, 255, 0.7);
             line-height: 1.4;
         }
-        
+
         .checkbox-group input {
-            margin-right: 8px;
+            margin-right: 10px;
             margin-top: 2px;
+            accent-color: #0070ba;
         }
-        
+
         .amount-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
+            gap: 15px;
         }
-        
+
         .amount-input {
             position: relative;
         }
-        
+
         .amount-input::before {
             content: "$";
             position: absolute;
-            left: 12px;
+            left: 16px;
             top: 50%;
             transform: translateY(-50%);
-            color: #666;
+            color: rgba(255, 255, 255, 0.6);
             font-weight: 500;
             z-index: 1;
         }
-        
+
         .amount-input input {
-            padding-left: 24px;
+            padding-left: 32px;
         }
-        
+
         .generate-btn {
-            background: #0070ba;
+            background: linear-gradient(135deg, #0070ba, #00b4db);
             color: white;
             border: none;
-            padding: 14px;
-            font-size: 15px;
+            padding: 16px;
+            font-size: 16px;
             font-weight: 600;
-            border-radius: 6px;
+            border-radius: 12px;
             cursor: pointer;
             width: 100%;
             margin-top: 10px;
-            transition: background 0.2s;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
-        
+
+        .generate-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
         .generate-btn:hover {
-            background: #005ea6;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 112, 186, 0.4);
         }
-        
+
+        .generate-btn:hover::before {
+            left: 100%;
+        }
+
         .receipt-container {
             display: none;
             background: white;
-            padding: 20px;
+            padding: 0;
         }
-        
+
         .receipt {
             background: white;
             border-radius: 0;
-            max-width: 400px;
+            max-width: 450px;
             margin: 0 auto;
             font-size: 14px;
-            line-height: 1.4;
-            color: #333;
+            line-height: 1.5;
+            color: #2d2d2d;
+            position: relative;
         }
-        
+
+        .receipt::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #0070ba, #00b4db, #64ffda);
+        }
+
         .receipt-header {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            padding: 30px 25px 20px;
+            background: linear-gradient(135deg, #f8f9fa, #ffffff);
         }
-        
+
         .receipt-header h2 {
             color: #003087;
-            font-size: 22px;
-            font-weight: 600;
+            font-size: 28px;
+            font-weight: 700;
             margin-bottom: 15px;
+            letter-spacing: 0.5px;
         }
-        
+
         .payment-info {
             margin-bottom: 20px;
+            color: #666;
         }
-        
+
         .divider {
             height: 1px;
-            background: #e1e8ed;
-            margin: 20px 0;
-        }
-        
-        .amount-section {
-            text-align: center;
+            background: linear-gradient(90deg, transparent, #e1e8ed, transparent);
             margin: 25px 0;
         }
-        
+
+        .amount-section {
+            text-align: center;
+            margin: 30px 0;
+            padding: 0 25px;
+        }
+
         .amount-label {
             font-size: 14px;
             color: #666;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
-        
+
         .amount {
-            font-size: 24px;
+            font-size: 32px;
             font-weight: 700;
             color: #001c64;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-        
+
         .details-table {
             width: 100%;
             border-collapse: collapse;
-            margin: 20px 0;
+            margin: 25px 0;
+            padding: 0 25px;
         }
-        
+
         .details-table td {
-            padding: 10px 0;
+            padding: 12px 0;
             border-bottom: 1px solid #f0f0f0;
             vertical-align: top;
         }
-        
+
         .details-table td:first-child {
             color: #666;
-            font-weight: 400;
+            font-weight: 500;
             width: 40%;
         }
-        
+
         .email {
             color: #0070ba;
+            font-weight: 500;
         }
-        
+
         .breakdown-table {
             width: 100%;
             border-collapse: collapse;
-            margin: 25px 0;
+            margin: 30px 0;
+            padding: 0 25px;
         }
-        
+
         .breakdown-table td {
-            padding: 8px 0;
+            padding: 10px 0;
         }
-        
+
         .breakdown-table .total {
-            border-top: 1px solid #001c64;
-            font-weight: 600;
+            border-top: 2px solid #001c64;
+            font-weight: 700;
             color: #001c64;
+            font-size: 15px;
         }
-        
+
         .help-section {
-            margin: 25px 0;
-            padding: 15px;
+            margin: 30px 25px;
+            padding: 20px;
             background: #f8f9fa;
-            border-radius: 6px;
+            border-radius: 12px;
+            border-left: 4px solid #0070ba;
         }
-        
+
         .help-title {
             font-weight: 600;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             color: #001c64;
+            font-size: 15px;
         }
-        
+
         .important-info {
             font-size: 12px;
             color: #666;
-            line-height: 1.5;
-            margin: 20px 0;
-            padding: 15px;
+            line-height: 1.6;
+            margin: 25px;
+            padding: 20px;
             background: #f8f9fa;
-            border-radius: 6px;
+            border-radius: 12px;
+            border: 1px solid #e1e8ed;
         }
-        
+
         .view-details {
             text-align: center;
-            margin: 25px 0;
-            padding: 15px;
+            margin: 30px 25px;
+            padding: 20px;
             border-top: 1px solid #e1e8ed;
             border-bottom: 1px solid #e1e8ed;
         }
-        
+
         .view-details-btn {
             color: #0070ba;
             text-decoration: none;
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 15px;
+            transition: color 0.3s ease;
         }
-        
+
+        .view-details-btn:hover {
+            color: #005ea6;
+        }
+
         .back-btn {
             background: #f8f9fa;
             color: #333;
             border: 1px solid #d1d1d1;
-            padding: 12px;
-            font-size: 14px;
-            font-weight: 500;
-            border-radius: 6px;
+            padding: 14px;
+            font-size: 15px;
+            font-weight: 600;
+            border-radius: 10px;
             cursor: pointer;
-            width: 100%;
-            margin-top: 15px;
-            transition: background 0.2s;
+            width: calc(100% - 50px);
+            margin: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
-        
+
+        .back-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0,0,0,0.05), transparent);
+            transition: left 0.5s;
+        }
+
         .back-btn:hover {
             background: #e9ecef;
+            border-color: #b1b1b1;
+            transform: translateY(-1px);
         }
+
+        .back-btn:hover::before {
+            left: 100%;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-pending { background: #fff3cd; color: #856404; }
+        .status-completed { background: #d1edff; color: #0070ba; }
+        .status-failed { background: #f8d7da; color: #721c24; }
     </style>
 </head>
 <body>
+    <div class="glow-effect"></div>
+    
     <div class="container">
         <div class="warning-banner">
-            FORM ONLY • NO REAL TRANSACTIONS OCCUR
+            ⚠️ SIMULATION ONLY • NO REAL TRANSACTIONS OCCUR
         </div>
         
         <div class="header">
-            <h1>Generate PayPal Receipt</h1>
-            <div class="disclaimer">Create professional PayPal payment receipts</div>
-            <div class="disclaimer">FOR EDUCATIONAL & TESTING PURPOSES ONLY</div>
+            <h1>PayPal Receipt Generator</h1>
+            <div class="disclaimer">Create professional payment receipts</div>
+            <div class="disclaimer">FOR EDUCATIONAL & TESTING PURPOSES</div>
         </div>
         
         <div class="form-section" id="formSection">
@@ -338,7 +517,7 @@
                 <label for="check2">Email address associated with PayPal account</label>
             </div>
             
-            <div class="section-title" style="margin-top: 25px;">Transaction Details</div>
+            <div class="section-title" style="margin-top: 30px;">Transaction Details</div>
             <div class="form-group">
                 <div class="amount-row">
                     <div class="amount-input">
@@ -369,7 +548,7 @@
                 </select>
             </div>
             
-            <div class="section-title" style="margin-top: 25px;">Custom Date & Time</div>
+            <div class="section-title" style="margin-top: 30px;">Custom Date & Time</div>
             <div class="form-group">
                 <div class="amount-row">
                     <div>
@@ -383,7 +562,9 @@
                 </div>
             </div>
             
-            <button class="generate-btn" onclick="generateReceipt()">Generate Receipt</button>
+            <button class="generate-btn" onclick="generateReceipt()">
+                🚀 Generate Receipt
+            </button>
         </div>
         
         <div class="receipt-container" id="receiptContainer">
@@ -405,7 +586,9 @@
                 
                 <div class="divider"></div>
                 
-                <div style="font-weight: 600; margin-bottom: 15px;">Transaction details</div>
+                <div style="font-weight: 600; margin-bottom: 15px; padding: 0 25px; font-size: 16px; color: #001c64;">
+                    Transaction details
+                </div>
                 
                 <table class="details-table">
                     <tr>
@@ -429,11 +612,15 @@
                     </tr>
                     <tr>
                         <td>Status</td>
-                        <td id="receiptStatusDetail">Pending</td>
+                        <td>
+                            <span id="receiptStatusDetail" class="status-badge status-pending">Pending</span>
+                        </td>
                     </tr>
                 </table>
                 
-                <div style="font-weight: 600; margin-bottom: 15px;">Amount breakdown</div>
+                <div style="font-weight: 600; margin-bottom: 15px; padding: 0 25px; font-size: 16px; color: #001c64;">
+                    Amount breakdown
+                </div>
                 
                 <table class="breakdown-table">
                     <tr>
@@ -464,11 +651,15 @@
                     <a href="#" class="view-details-btn">View transaction details</a>
                 </div>
                 
-                <div style="text-align: center; margin-top: 20px;">
-                    <a href="#" style="color: #0070ba; text-decoration: none; font-weight: 500;">Send another payment</a>
+                <div style="text-align: center; margin-top: 20px; padding: 0 25px;">
+                    <a href="#" style="color: #0070ba; text-decoration: none; font-weight: 600; font-size: 15px;">
+                        Send another payment
+                    </a>
                 </div>
                 
-                <button class="back-btn" onclick="showForm()">← Back to Generator</button>
+                <button class="back-btn" onclick="showForm()">
+                    ← Back to Generator
+                </button>
             </div>
         </div>
     </div>
@@ -531,7 +722,12 @@
             document.getElementById('receiptAmount').textContent = formatter.format(amount);
             document.getElementById('receiptTransactionId').textContent = transactionId;
             document.getElementById('receiptDateTime').innerHTML = `${displayDate}<br>${displayTime}`;
-            document.getElementById('receiptStatusDetail').textContent = status;
+            
+            // Update status with proper styling
+            const statusElement = document.getElementById('receiptStatusDetail');
+            statusElement.textContent = status;
+            statusElement.className = 'status-badge status-' + status.toLowerCase();
+            
             document.getElementById('breakdownAmount').textContent = formatter.format(amount);
             document.getElementById('breakdownFee').textContent = formatter.format(fee);
             document.getElementById('breakdownTotal').textContent = formatter.format(-(amount + fee));
