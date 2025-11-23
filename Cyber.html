@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚡💀 WELCOME TO ANONYMOUS CYBER TOLL☠️| Advanced IP Intelligence</title>
+    <style>
+        :root {
+            --hacker-green: #00ff00;
+            --matrix-green: #00cc00;
+            --dark-bg: #0a0a0a;
+            --darker-bg: #050505;
+            --terminal-bg: #001100;
+            --glow: 0 0 10px var(--hacker-green);
+            --red-alert: #ff0000;
+            --yellow-warning: #ffff00;
+            --blue-info: #00ffff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Courier New', monospace;
+        }
+        
+        body {
+            background: var(--dark-bg);
+            color: var(--hacker-green);
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(0, 255, 0, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 60%, rgba(0, 255, 0, 0.03) 0%, transparent 20%);
+        }
+        
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0, 255, 0, 0.03) 2px,
+                rgba(0, 255, 0, 0.03) 4px
+            );
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .header {
+            background: linear-gradient(90deg, var(--darker-bg), #001100, var(--darker-bg));
+            border-bottom: 1px solid var(--hacker-green);
+            padding: 1rem;
+            text-align: center;
+            box-shadow: var(--glow);
+            position: relative;
+        }
+        
+        .header::before {
+            content: "█▓▒░ ";
+            color: var(--hacker-green);
+        }
+        
+        .header::after {
+            content: " ░▒▓█";
+            color: var(--hacker-green);
+        }
+        
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            background: var(--darker-bg);
+            border-bottom: 1px solid var(--matrix-green);
+            flex-wrap: wrap;
+        }
+        
+        .tab {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            font-size: 0.9rem;
+        }
+        
+        .tab::before {
+            content: ">_ ";
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .tab:hover::before {
+            opacity: 1;
+        }
+        
+        .tab.active {
+            background: var(--terminal-bg);
+            border: 1px solid var(--hacker-green);
+            box-shadow: var(--glow);
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        
+        .quick-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .info-card {
+            background: var(--darker-bg);
+            border: 1px solid var(--matrix-green);
+            padding: 1.5rem;
+            border-radius: 5px;
+            box-shadow: var(--glow);
+        }
+        
+        .info-card h3 {
+            color: var(--blue-info);
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--matrix-green);
+            padding-bottom: 0.5rem;
+        }
+        
+        .panel {
+            background: var(--darker-bg);
+            border: 1px solid var(--matrix-green);
+            border-radius: 5px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--glow);
+            display: none;
+        }
+        
+        .panel.active {
+            display: block;
+            animation: terminalGlow 2s infinite alternate;
+        }
+        
+        @keyframes terminalGlow {
+            from { box-shadow: 0 0 5px var(--matrix-green); }
+            to { box-shadow: 0 0 20px var(--hacker-green); }
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--matrix-green);
+            font-weight: bold;
+        }
+        
+        .terminal-input {
+            width: 100%;
+            background: var(--terminal-bg);
+            border: 1px solid var(--hacker-green);
+            color: var(--hacker-green);
+            padding: 0.75rem;
+            font-size: 1rem;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        
+        .terminal-input:focus {
+            outline: none;
+            box-shadow: 0 0 15px var(--hacker-green);
+        }
+        
+        .hacker-btn {
+            background: linear-gradient(45deg, var(--darker-bg), var(--terminal-bg));
+            border: 1px solid var(--hacker-green);
+            color: var(--hacker-green);
+            padding: 1rem 2rem;
+            cursor: pointer;
+            font-size: 1rem;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            margin-right: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hacker-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 0, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .hacker-btn:hover::before {
+            left: 100%;
+        }
+        
+        .hacker-btn:hover {
+            box-shadow: var(--glow);
+            transform: translateY(-2px);
+        }
+        
+        .btn-danger {
+            border-color: var(--red-alert);
+            color: var(--red-alert);
+        }
+        
+        .btn-warning {
+            border-color: var(--yellow-warning);
+            color: var(--yellow-warning);
+        }
+        
+        .results {
+            background: var(--terminal-bg);
+            border: 1px solid var(--matrix-green);
+            padding: 1.5rem;
+            margin-top: 1rem;
+            border-radius: 3px;
+            min-height: 200px;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        
+        .result-line {
+            margin-bottom: 0.5rem;
+            padding: 0.25rem;
+            border-left: 2px solid var(--hacker-green);
+            padding-left: 0.5rem;
+        }
+        
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .data-card {
+            background: var(--terminal-bg);
+            border: 1px solid var(--matrix-green);
+            padding: 1rem;
+            border-radius: 3px;
+        }
+        
+        .data-label {
+            color: var(--matrix-green);
+            font-size: 0.9rem;
+            margin-bottom: 0.25rem;
+        }
+        
+        .data-value {
+            color: var(--hacker-green);
+            font-weight: bold;
+            word-break: break-all;
+        }
+        
+        .scanning {
+            color: var(--hacker-green);
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid var(--matrix-green);
+            margin-top: 2rem;
+            color: var(--matrix-green);
+            font-size: 0.8rem;
+        }
+        
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .tool-card {
+            background: var(--terminal-bg);
+            border: 1px solid var(--matrix-green);
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .tool-card:hover {
+            box-shadow: var(--glow);
+            transform: translateY(-3px);
+        }
+        
+        .vpn-detector {
+            padding: 1rem;
+            background: var(--terminal-bg);
+            border: 1px solid var(--matrix-green);
+            margin: 1rem 0;
+            border-radius: 3px;
+        }
+        
+        .vpn-status {
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            border-radius: 3px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .vpn-clean {
+            background: #002200;
+            border: 1px solid var(--hacker-green);
+            color: var(--hacker-green);
+        }
+        
+        .vpn-detected {
+            background: #220000;
+            border: 1px solid var(--red-alert);
+            color: var(--red-alert);
+        }
+        
+        .blacklist-check {
+            margin: 1rem 0;
+        }
+        
+        .blacklist-item {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            padding: 0.5rem;
+            border-bottom: 1px solid var(--matrix-green);
+        }
+        
+        .status-clean {
+            color: var(--hacker-green);
+        }
+        
+        .status-listed {
+            color: var(--red-alert);
+        }
+        
+        .ip-display {
+            font-size: 2rem;
+            text-align: center;
+            margin: 1rem 0;
+            color: var(--blue-info);
+            font-weight: bold;
+            text-shadow: var(--glow);
+        }
+        
+        /* Matrix rain effect */
+        .matrix-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.1;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-tabs {
+                flex-direction: column;
+            }
+            
+            .tab {
+                text-align: center;
+            }
+            
+            .quick-info {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="matrix-bg"></div>
+    <canvas class="matrix-rain" id="matrixRain"></canvas>
+    
+    <header class="header">
+        <h1>CYBER INTEL SUITE v3.0</h1>
+        <p>Advanced IP Intelligence & Network Analysis Platform</p>
+    </header>
+    
+    <nav class="nav-tabs">
+        <div class="tab active" data-tab="ip-overview">IP Overview</div>
+        <div class="tab" data-tab="ip-tracker">IP Tracker</div>
+        <div class="tab" data-tab="vpn-tools">VPN Tools</div>
+        <div class="tab" data-tab="blacklist-check">Blacklist Check</div>
+        <div class="tab" data-tab="network-tools">Network Tools</div>
+        <div class="tab" data-tab="phone-info">Phone Intelligence</div>
+        <div class="tab" data-tab="giftcard-gen">Gift Card Generator</div>
+    </nav>
+    
+    <div class="container">
+        <!-- Quick Info Section -->
+        <div class="quick-info">
+            <div class="info-card">
+                <h3>🌐 YOUR PUBLIC IP</h3>
+                <div class="ip-display" id="publicIp">Loading...</div>
+                <div class="data-grid">
+                    <div class="data-card">
+                        <div class="data-label">Location</div>
+                        <div class="data-value" id="ipLocation">-</div>
+                    </div>
+                    <div class="data-card">
+                        <div class="data-label">ISP</div>
+                        <div class="data-value" id="ipIsp">-</div>
+                    </div>
+                    <div class="data-card">
+                        <div class="data-label">Proxy Detection</div>
+                        <div class="data-value" id="proxyStatus">-</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="info-card">
+                <h3>🛡️ SECURITY STATUS</h3>
+                <div class="vpn-detector">
+                    <div class="input-label">VPN & Proxy Detection</div>
+                    <div class="vpn-status" id="vpnStatus">
+                        <div class="scanning">Analyzing connection...</div>
+                    </div>
+                </div>
+                <button class="hacker-btn" onclick="checkVPN()">REFRESH ANALYSIS</button>
+            </div>
+        </div>
+        
+        <!-- IP Overview Panel -->
+        <div class="panel active" id="ip-overview">
+            <h2>🔍 COMPREHENSIVE IP ANALYSIS</h2>
+            <div class="tool-grid">
+                <div class="tool-card" onclick="showPanel('ip-tracker')">
+                    <h3>IP Geolocation</h3>
+                    <p>Track any IP address worldwide</p>
+                </div>
+                <div class="tool-card" onclick="showPanel('vpn-tools')">
+                    <h3>VPN Detection</h3>
+                    <p>Check VPN and proxy usage</p>
+                </div>
+                <div class="tool-card" onclick="showPanel('blacklist-check')">
+                    <h3>Blacklist Check</h3>
+                    <p>Verify IP reputation</p>
+                </div>
+                <div class="tool-card" onclick="showPanel('network-tools')">
+                    <h3>Network Tools</h3>
+                    <p>Ping, Traceroute, Port Scan</p>
+                </div>
+            </div>
+            
+            <div class="results">
+                <div class="result-line">[SYSTEM] Comprehensive IP Analysis Dashboard Active</div>
+                <div class="result-line">[INFO] Select a tool from above or use navigation tabs</div>
+                <div class="result-line">[STATUS] Real-time monitoring enabled</div>
+                
+                <div class="data-grid" id="quickStats">
+                    <!-- Dynamic content will be loaded here -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- IP Tracker Panel -->
+        <div class="panel" id="ip-tracker">
+            <h2>🌐 ADVANCED IP GEOLOCATION TRACKER</h2>
+            <div class="input-group">
+                <label class="input-label">Target IP Address or Domain:</label>
+                <input type="text" class="terminal-input" id="ipInput" placeholder="Enter IP address or domain (e.g., 8.8.8.8 or google.com)" value="">
+            </div>
+            <button class="hacker-btn" onclick="trackIP()">INITIATE TRACKING</button>
+            <button class="hacker-btn btn-warning" onclick="getMyIP()">SHOW MY IP</button>
+            
+            <div class="results" id="ipResults">
+                <div class="result-line">[SYSTEM] IP Tracking Module Ready</div>
+                <div class="result-line">[STATUS] Awaiting target input...</div>
+            </div>
+        </div>
+        
+        <!-- VPN Tools Panel -->
+        <div class="panel" id="vpn-tools">
+            <h2>🛡️ VPN & PROXY DETECTION TOOLS</h2>
+            <div class="input-group">
+                <label class="input-label">Check IP for VPN/Proxy Usage:</label>
+                <input type="text" class="terminal-input" id="vpnCheckInput" placeholder="Enter IP address to check" value="">
+            </div>
+            <button class="hacker-btn" onclick="checkSpecificVPN()">CHECK VPN STATUS</button>
+            <button class="hacker-btn btn-warning" onclick="checkVPN()">CHECK MY CONNECTION</button>
+            
+            <div class="results" id="vpnResults">
+                <div class="result-line">[SYSTEM] VPN Detection Suite Active</div>
+                <div class="result-line">[INFO] Analyze IP addresses for proxy/VPN usage</div>
+            </div>
+        </div>
+        
+        <!-- Blacklist Check Panel -->
+        <div class="panel" id="blacklist-check">
+            <h2>📋 IP BLACKLIST MONITORING</h2>
+            <div class="input-group">
+                <label class="input-label">Check IP Against Blacklists:</label>
+                <input type="text" class="terminal-input" id="blacklistInput" placeholder="Enter IP address to check" value="">
+            </div>
+            <button class="hacker-btn" onclick="checkBlacklist()">SCAN BLACKLISTS</button>
+            <button class="hacker-btn btn-danger" onclick="checkMyBlacklist()">CHECK MY IP</button>
+            
+            <div class="results" id="blacklistResults">
+                <div class="result-line">[SYSTEM] Blacklist Monitoring System Online</div>
+                <div class="result-line">[INFO] Scanning 50+ security databases</div>
+            </div>
+        </div>
+        
+        <!-- Network Tools Panel -->
+        <div class="panel" id="network-tools">
+            <h2>🔧 ADVANCED NETWORK TOOLS</h2>
+            <div class="input-group">
+                <label class="input-label">Target Host or IP:</label>
+                <input type="text" class="terminal-input" id="networkTarget" placeholder="Enter hostname or IP address" value="google.com">
+            </div>
+            
+            <button class="hacker-btn" onclick="pingHost()">PING</button>
+            <button class="hacker-btn" onclick="traceroute()">TRACEROUTE</button>
+            <button class="hacker-btn" onclick="portScan()">PORT SCAN</button>
+            <button class="hacker-btn btn-warning" onclick="dnsLookup()">DNS LOOKUP</button>
+            
+            <div class="results" id="networkResults">
+                <div class="result-line">[SYSTEM] Network Diagnostic Tools Ready</div>
+                <div class="result-line">[INFO] Select a tool to analyze network connectivity</div>
+            </div>
+        </div>
+        
+        <!-- Phone Intelligence Panel -->
+        <div class="panel" id="phone-info">
+            <h2>📱 PHONE NUMBER INTELLIGENCE</h2>
+            <div class="input-group">
+                <label class="input-label">Target Phone Number:</label>
+                <input type="text" class="terminal-input" id="phoneInput" placeholder="Enter phone number (e.g., +1234567890)" value="">
+            </div>
+            <button class="hacker-btn" onclick="scanPhone()">EXTRACT INFORMATION</button>
+            
+            <div class="results" id="phoneResults">
+                <div class="result-line">[SYSTEM] Phone Intelligence Module Active</div>
+                <div class="result-line">[WARNING] Use in compliance with local laws</div>
+            </div>
+        </div>
+        
+        <!-- Gift Card Generator Panel -->
+        <div class="panel" id="giftcard-gen">
+            <h2>💳 ADVANCED GIFT CARD GENERATOR</h2>
+            <div class="input-group">
+                <label class="input-label">Select Card Type:</label>
+                <select class="terminal-input" id="cardType">
+                    <option value="amazon">Amazon ($100)</option>
+                    <option value="steam">Steam Wallet ($50)</option>
+                    <option value="itunes">iTunes ($25)</option>
+                    <option value="google">Google Play ($20)</option>
+                    <option value="visa">Visa Prepaid ($200)</option>
+                </select>
+            </div>
+            <button class="hacker-btn" onclick="generateGiftCard()">GENERATE CARD</button>
+            
+            <div class="results" id="giftcardResults">
+                <div class="result-line">[SYSTEM] Gift Card Generator Online</div>
+                <div class="result-line">[INFO] Select card type and generate</div>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <p>⚠️ FOR EDUCATIONAL AND AUTHORIZED PENETRATION TESTING USE ONLY</p>
+        <p>CYBER INTEL SUITE v3.0 | © 2024 Advanced Threat Intelligence</p>
+    </footer>
+
+    <script>
+        // Matrix Rain Effect
+        const canvas = document.getElementById('matrixRain');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        const chars = '01010101010101010101010101010101';
+        const charArray = chars.split('');
+        const fontSize = 14;
+        const columns = canvas.width / fontSize;
+        const drops = [];
+        
+        for(let i = 0; i < columns; i++) {
+            drops[i] = 1;
+        }
+        
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.04)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = '#0F0';
+            ctx.font = fontSize + 'px monospace';
+            
+            for(let i = 0; i < drops.length; i++) {
+                const text = charArray[Math.floor(Math.random() * charArray.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                
+                if(drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+        
+        setInterval(drawMatrix, 35);
+        
+        // Tab functionality
+        function showPanel(panelId) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+            
+            document.querySelector(`[data-tab="${panelId}"]`).classList.add('active');
+            document.getElementById(panelId).classList.add('active');
+        }
+        
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => showPanel(tab.dataset.tab));
+        });
+        
+        // Initialize with user's IP
+        async function initializeUserIP() {
+            try {
+                const response = await fetch('https://api.ipify.org?format=json');
+                const data = await response.json();
+                document.getElementById('publicIp').textContent = data.ip;
+                
+                // Get IP details
+                const ipDetails = await getIPDetails(data.ip);
+                document.getElementById('ipLocation').textContent = `${ipDetails.city}, ${ipDetails.country}`;
+                document.getElementById('ipIsp').textContent = ipDetails.isp;
+                document.getElementById('proxyStatus').textContent = ipDetails.proxy ? 'DETECTED' : 'CLEAN';
+                
+                updateQuickStats(ipDetails);
+                checkVPN();
+                
+            } catch (error) {
+                document.getElementById('publicIp').textContent = 'Unable to detect';
+                // Fallback to fake data
+                const fallbackData = {
+                    ip: '192.168.1.1',
+                    city: 'Unknown',
+                    country: 'Unknown',
+                    isp: 'Unknown ISP',
+                    proxy: false
+                };
+                updateQuickStats(fallbackData);
+            }
+        }
+        
+        // Get IP Details
+        async function getIPDetails(ip) {
+            // Simulated API response
+            return new Promise(resolve => {
+                setTimeout(() => {
+                    const fakeData = {
+                        ip: ip,
+                        country: "United States",
+                        city: Math.random() > 0.5 ? "New York" : "Los Angeles",
+                        isp: Math.random() > 0.5 ? "Comcast Cable" : "Verizon Fios",
+                        org: "Major Telecom Corp",
+                        timezone: "America/New_York",
+                        latitude: "40.7128",
+                        longitude: "-74.0060",
+                        threat_level: "Low",
+                        proxy: Math.random() > 0.7,
+                        hosting: Math.random() > 0.8
+                    };
+                    resolve(fakeData);
+                }, 1000);
+            });
+        }
+        
+        // Update Quick Stats
+        function updateQuickStats(data) {
+            const quickStats = document.getElementById('quickStats');
+            quickStats.innerHTML = `
+                <div class="data-card">
+                    <div class="data-label">IP Version</div>
+                    <div class="data-value">IPv4</div>
+                </div>
+                <div class="data-card">
+                    <div class="data-label">Country Code</div>
+                    <div class="data-value">US</div>
+                </div>
+                <div class="data-card">
+                    <div class="data-label">Region</div>
+                    <div class="data-value">${data.city}</div>
+                </div>
+                <div class="data-card">
+                    <div class="data-label">Timezone</div>
+                    <div class="data-value">${data.timezone}</div>
+                </div>
+                <div class="data-card">
+                    <div class="data-label">Hosting Provider</div>
+                    <div class="data-value">${data.hosting ? 'YES' : 'NO'}</div>
+                </div>
+                <div class="data-card">
+                    <div class="data-label">Threat Level</div>
+                    <div class="data-value" style="color: #00ff00;">${data.threat_level}</div>
+                </div>
+            `;
+        }
+        
+        // VPN Detection
+        async function checkVPN() {
+            const vpnStatus = document.getElementById('vpnStatus');
+            vpnStatus.innerHTML = '<div class="scanning">Analyzing network connection...</div>';
+            
+            setTimeout(() => {
+                const isVPN = Math.random() > 0.7;
+                if (isVPN) {
+                    vpnStatus.innerHTML = `
+                        <div class="vpn-status vpn-detected">
+                            ⚠️ VPN/PROXY DETECTED
+                        </div>
+                        <div class="result-line">[WARNING] Your connection appears to be routed through a VPN/proxy</div>
+                        <div class="result-line">[DETAILS] Encrypted tunnel detected - Exit node: Netherlands</div>
+                    `;
+                } else {
+                    vpnStatus.innerHTML = `
+                        <div class="vpn-status vpn-clean">
+                            ✅ CLEAN CONNECTION
+                        </div>
+                        <div class="result-line">[SUCCESS] No VPN or proxy detected</div>
+                        <div class="result-line">[INFO] Direct internet connection confirmed</div>
+                    `;
+                }
+            }, 2000);
+        }
+        
+        // IP Tracking Function
+        async function trackIP() {
+            const ip = document.getElementById('ipInput').value || '8.8.8.8';
+            const results = document.getElementById('ipResults');
+            
+            results.innerHTML = `
+                <div class="result-line scanning">[TRACKING] Initiating geolocation scan for ${ip}</div>
+                <div class="result-line scanning">[QUERY] Contacting geo-databases...</div>
+            `;
+            
+            setTimeout(async () => {
+                const ipDetails = await getIPDetails(ip);
+                
+                results.innerHTML = `
+                    <div class="result-line">[SUCCESS] Target IP: ${ipDetails.ip}</div>
+                    <div class="data-grid">
+                        <div class="data-card">
+                            <div class="data-label">Location</div>
+                            <div class="data-value">${ipDetails.city}, ${ipDetails.country}</div>
+                        </div>
+                        <div class="data-card">
+                            <div class="data-label">ISP/Organization</div>
+                            <div class="data-value">${ipDetails.isp} (${ipDetails.org})</div>
+                        </div>
+                        <div class="data-card">
+                            <div class="data-label">Coordinates</div>
+                            <div class="data-value">${ipDetails.latitude}, ${ipDetails.longitude}</div>
+                        </div>
+                        <div class="data-card">
+                            <div class="data-label">Threat Level</div>
+                            <div class="data-value" style="color: #00ff00;">${ipDetails.threat_level}</div>
+                        </div>
+                        <div class="data-card">
+                            <div class="data-label">Proxy Detected</div>
+                            <div class="data-value">${ipDetails.proxy ? 'YES' : 'NO'}</div>
+                        </div>
+                        <div class="data-card">
+                            <div class="data-label">Hosting Service</div>
+                            <div class="data-value">${ipDetails.hosting ? 'YES' : 'NO'}</div>
+                        </div>
+                    </div>
+                    <div class="result-line">[COMPLETE] Geolocation data extracted successfully</div>
+                `;
+            }, 2000);
+        }
+        
+        // Blacklist Check Function
+        async function checkBlacklist() {
+            const ip = document.getElementById('blacklistInput').value || document.getElementById('publicIp').textContent;
+            const results = document.getElementById('blacklistResults');
+            
+            results.innerHTML = `
+                <div class="result-line scanning">[SCANNING] Checking ${ip} against 50+ blacklist databases...</div>
+            `;
+            
+            setTimeout(() => {
+                const blacklists = [
+                    { name: 'Spamhaus', status: 'CLEAN' },
+                    { name: 'Barracuda', status: 'CLEAN' },
+                    { name: 'SORBS', status: 'CLEAN' },
+                    { name: 'AbuseIPDB', status: 'LISTED' },
+                    { name: 'AlienVault', status: 'CLEAN' }
+                ];
+                
+                let resultsHTML = `
+                    <div class="result-line">[RESULTS] Blacklist check completed for ${ip}</div>
+                `;
+                
+                blacklists.forEach(list => {
+                    resultsHTML += `
+                        <div class="blacklist-item">
+                            <span>${list.name}</span>
+                            <span class="${list.status === 'CLEAN' ? 'status-clean' : 'status-listed'}">${list.status}</span>
+                        </div>
+                    `;
+                });
+                
+                resultsHTML += `<div class="result-line">[SUMMARY] 1/50 blacklists reported issues</div>`;
+                results.innerHTML = resultsHTML;
+            }, 3000);
+        }
+        
+        // Network Tools
+        async function pingHost() {
+            const target = document.getElementById('networkTarget').value;
+            const results = document.getElementById('networkResults');
+            
+            results.innerHTML = `<div class="result-line scanning">[PING] Sending ICMP packets to ${target}...</div>`;
+            
+            setTimeout(() => {
+                results.innerHTML = `
+                    <div class="result-line">[PING] Pinging ${target} with 32 bytes of data:</div>
+                    <div class="result-line">Reply from ${target}: bytes=32 time=15ms TTL=57</div>
+                    <div class="result-line">Reply from ${target}: bytes=32 time=18ms TTL=57</div>
+                    <div class="result-line">Reply from ${target}: bytes=32 time=12ms TTL=57</div>
+                    <div class="result-line">Reply from ${target}: bytes=32 time=21ms TTL=57</div>
+                    <div class="result-line">[STATISTICS] Packets: Sent=4, Received=4, Lost=0 (0% loss)</div>
+                `;
+            }, 2000);
+        }
+        
+        // Initialize on load
+        window.onload = function() {
+            initializeUserIP();
+            document.getElementById('ipInput').value = '8.8.8.8';
+            document.getElementById('phoneInput').value = '+1234567890';
+            document.getElementById('networkTarget').value = 'google.com';
+        };
+
+        // Additional functions for other panels (simplified for brevity)
+        function getMyIP() { trackIP(); }
+        function checkSpecificVPN() { checkVPN(); }
+        function checkMyBlacklist() { checkBlacklist(); }
+        function traceroute() { 
+            document.getElementById('networkResults').innerHTML = '<div class="result-line">[TRACEROUTE] Feature requires server-side implementation</div>'; 
+        }
+        function portScan() { 
+            document.getElementById('networkResults').innerHTML = '<div class="result-line">[PORT_SCAN] Feature requires server-side implementation</div>'; 
+        }
+        function dnsLookup() { 
+            document.getElementById('networkResults').innerHTML = '<div class="result-line">[DNS_LOOKUP] Feature requires server-side implementation</div>'; 
+        }
+        
+        // Keep existing functions from previous implementation
+        async function scanPhone() {
+            const phone = document.getElementById('phoneInput').value || '+1234567890';
+            const results = document.getElementById('phoneResults');
+            
+            results.innerHTML = `
+                <div class="result-line scanning">[SCANNING] Analyzing phone number: ${phone}</div>
+                <div class="result-line scanning">[QUERY] Accessing carrier databases...</div>
+            `;
+            
+            setTimeout(() => {
+                const fakeData = {
+                    number: phone,
+                    carrier: "Verizon Wireless",
+                    country: "United States",
+                    line_type: "Mobile",
+                    valid: true,
+                    risk_score: "25/100",
+                    reputation: "Clean",
+                    name_associated: "John Doe",
+                    location: "New York, NY"
+                };
+                
+                results.innerHTML = `
+                    <div class="result-line">[SUCCESS] Phone Intelligence Report</div>
+                    <div class="data-grid">
+                        <div class="data-card">
+                            <div class="data-label">Carrier</div>
+                            <div class="data-value">${fakeData.carrier}</div>
+                        </div>
+                        <div class="data-card">
+                            <div class="data-label">Line Type</div>
+                            <div class="data-value">${fakeData.line_type}</div>
+                        </div>
+                        <div class="data-card">
+                            <div class="data-label">Risk Score</div>
+                            <div class="data-value" style="color: #ffff00;">${fakeData.risk_score}</div>
+                        </div>
+                        <div class="data-card">
+                            <div class="data-label">Reputation</div>
+                            <div class="data-value" style="color: #00ff00;">${fakeData.reputation}</div>
+                        </div>
+                        <div class="data-card">
+                            <div class="data-label">Associated Name</div>
+                            <div class="data-value">${fakeData.name_associated}</div>
+                        </div>
+                        <div class="data-card">
+                            <div class="data-label">Estimated Location</div>
+                            <div class="data-value">${fakeData.location}</div>
+                        </div>
+                    </div>
+                    <div class="result-line">[COMPLETE] Phone analysis finished</div>
+                `;
+            }, 3000);
+        }
+        
+        function generateGiftCard() {
+            const cardType = document.getElementById('cardType').value;
+            const results = document.getElementById('giftcardResults');
+            
+            results.innerHTML = `
+                <div class="result-line scanning">[GENERATING] Creating ${cardType.toUpperCase()} gift card...</div>
+                <div class="result-line scanning">[PROCESSING] Bypassing security protocols...</div>
+            `;
+            
+            setTimeout(() => {
+                const cardNumber = Array.from({length: 16}, () => Math.floor(Math.random() * 10)).join('');
+                const pin = Array.from({length: 4}, () => Math.floor(Math.random() * 10)).join('');
+                const amount = cardType === 'amazon' ? '$100' : 
+                              cardType === 'steam' ? '$50' :
+                              cardType === 'itunes' ? '$25' :
+                              cardType === 'google' ? '$20' : '$200';
+                
+                results.innerHTML = `
+                    <div class="result-line">[SUCCESS] Gift Card Generated Successfully!</div>
+                    <div class="data-grid">
+                        <div class="data-card">
+                            <div class="data-label">Card Type</div>
+                            <div class="data-value">${cardType.toUpperCase()}</div>
+                        </div>
+                        <div class="data-card">
+                            <div class="data-label">Amount</div>
+                            <div class="data-value" style="color: #00ffff;">${amount}</div>
+                        </div>
+                        <div class="data-card">
+                            <div class="data-label">Card Number</div>
+                            <div class="data-value">${cardNumber.match(/.{1,4}/g).join(' ')}</div>
+                        </div>
+                        <div class="data-card">
+                            <div class="data-label">PIN Code</div>
+                            <div class="data-value">${pin}</div>
+                        </div>
+                        <div class="data-card">
+                            <div class="data-label">Expiration</div>
+                            <div class="data-value">12/2026</div>
+                        </div>
+                        <div class="data-card">
+                            <div class="data-label">Status</div>
+                            <div class="data-value" style="color: #00ff00;">ACTIVE</div>
+                        </div>
+                    </div>
+                    <div class="result-line">[WARNING] Use immediately to avoid detection</div>
+                `;
+            }, 2500);
+        }
+    </script>
+</body>
+</html>

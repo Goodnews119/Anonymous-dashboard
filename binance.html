@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binance Receipt Generator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+        
+        body {
+            background: #0c0e12;
+            color: #eaecf0;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #f0b90b;
+        }
+        
+        .form-section {
+            background: #1e2329;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #2b3139;
+        }
+        
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #eaecf0;
+        }
+        
+        .subsection-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 25px 0 15px 0;
+            color: #eaecf0;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #b7bdc6;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #474d57;
+            border-radius: 4px;
+            font-size: 14px;
+            background: #0c0e12;
+            color: #eaecf0;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #f0b90b;
+        }
+        
+        .address-input {
+            font-family: monospace;
+            font-size: 12px;
+            min-height: 60px;
+            resize: vertical;
+        }
+        
+        .amount-input {
+            font-size: 16px;
+            font-weight: 600;
+        }
+        
+        .divider {
+            height: 1px;
+            background: #2b3139;
+            margin: 25px 0;
+        }
+        
+        .fee-note {
+            font-size: 12px;
+            color: #b7bdc6;
+            margin-top: 8px;
+            line-height: 1.4;
+        }
+        
+        .crypto-selector {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .crypto-option {
+            padding: 15px;
+            border: 1px solid #474d57;
+            border-radius: 4px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #0c0e12;
+        }
+        
+        .crypto-option.active {
+            border-color: #f0b90b;
+            background: rgba(240, 185, 11, 0.1);
+        }
+        
+        .crypto-icon {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+        
+        .crypto-symbol {
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+        
+        .crypto-name {
+            font-size: 12px;
+            color: #b7bdc6;
+        }
+        
+        .generate-btn {
+            background: #f0b90b;
+            color: #000000;
+            border: none;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        .generate-btn:hover {
+            background: #d8a90a;
+        }
+        
+        .receipt-container {
+            display: none;
+            background: #1e2329;
+            border-radius: 8px;
+            padding: 0;
+            margin-top: 20px;
+            border: 1px solid #2b3139;
+            overflow: hidden;
+        }
+        
+        .receipt {
+            background: #1e2329;
+            color: #eaecf0;
+        }
+        
+        .receipt-header {
+            padding: 20px;
+        }
+        
+        .receipt-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        
+        .receipt-amount {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #f0b90b;
+        }
+        
+        .receipt-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: #00c087;
+            margin-bottom: 8px;
+        }
+        
+        .status-description {
+            font-size: 14px;
+            color: #b7bdc6;
+            margin-bottom: 12px;
+        }
+        
+        .help-link {
+            color: #f0b90b;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        
+        .receipt-divider {
+            height: 1px;
+            background: #2b3139;
+            margin: 0;
+        }
+        
+        .receipt-details {
+            padding: 20px;
+        }
+        
+        .detail-section {
+            margin-bottom: 20px;
+        }
+        
+        .detail-section-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #eaecf0;
+        }
+        
+        .detail-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .detail-table td {
+            padding: 12px 0;
+            border-bottom: 1px solid #2b3139;
+            vertical-align: top;
+        }
+        
+        .detail-label {
+            font-weight: 500;
+            color: #b7bdc6;
+            width: 40%;
+        }
+        
+        .detail-value {
+            font-weight: 600;
+            text-align: right;
+            word-break: break-all;
+        }
+        
+        .address-block {
+            background: #0c0e12;
+            padding: 12px;
+            border-radius: 4px;
+            margin-top: 8px;
+            font-family: monospace;
+            font-size: 12px;
+            line-height: 1.4;
+            text-align: center;
+            border: 1px solid #2b3139;
+            color: #b7bdc6;
+        }
+        
+        .hash-line {
+            display: block;
+            margin-bottom: 2px;
+        }
+        
+        .receipt-actions {
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid #2b3139;
+        }
+        
+        .save-address-btn {
+            background: #f0b90b;
+            color: #000000;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .back-btn {
+            background: transparent;
+            color: #b7bdc6;
+            border: 1px solid #474d57;
+            padding: 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 15px;
+            font-weight: 500;
+        }
+        
+        .back-btn:hover {
+            background: #2b3139;
+        }
+        
+        .network-label {
+            color: #b7bdc6;
+            font-weight: 500;
+        }
+        
+        .total-label {
+            font-weight: 600;
+            color: #eaecf0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Binance Receipt Generator</h1>
+        </div>
+        
+        <div class="form-section" id="formSection">
+            <div class="section-title">Transaction Details</div>
+            
+            <div class="subsection-title">Cryptocurrency</div>
+            <div class="crypto-selector">
+                <div class="crypto-option active" data-crypto="BTC" onclick="selectCrypto('BTC')">
+                    <div class="crypto-icon">₿</div>
+                    <div class="crypto-symbol">BTC</div>
+                    <div class="crypto-name">Bitcoin</div>
+                </div>
+                <div class="crypto-option" data-crypto="ETH" onclick="selectCrypto('ETH')">
+                    <div class="crypto-icon">⟠</div>
+                    <div class="crypto-symbol">ETH</div>
+                    <div class="crypto-name">Ethereum</div>
+                </div>
+                <div class="crypto-option" data-crypto="USDT" onclick="selectCrypto('USDT')">
+                    <div class="crypto-icon">₮</div>
+                    <div class="crypto-symbol">USDT</div>
+                    <div class="crypto-name">Tether</div>
+                </div>
+                <div class="crypto-option" data-crypto="BNB" onclick="selectCrypto('BNB')">
+                    <div class="crypto-icon">B</div>
+                    <div class="crypto-symbol">BNB</div>
+                    <div class="crypto-name">Binance Coin</div>
+                </div>
+                <div class="crypto-option" data-crypto="ADA" onclick="selectCrypto('ADA')">
+                    <div class="crypto-icon">A</div>
+                    <div class="crypto-symbol">ADA</div>
+                    <div class="crypto-name">Cardano</div>
+                </div>
+                <div class="crypto-option" data-crypto="SOL" onclick="selectCrypto('SOL')">
+                    <div class="crypto-icon">S</div>
+                    <div class="crypto-symbol">SOL</div>
+                    <div class="crypto-name">Solana</div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>Deposit Address</label>
+                <textarea class="address-input" id="depositAddress" placeholder="Jsjsjsjihsgssgsggggg3939399"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label>Amount</label>
+                <input type="number" class="amount-input" id="amount" placeholder="500000" step="0.000001">
+            </div>
+            
+            <div class="divider"></div>
+            
+            <div class="subsection-title">Network Fee</div>
+            <div class="form-group">
+                <input type="number" id="networkFee" placeholder="10" step="0.000001" value="10">
+                <div class="fee-note">Automatically calculated based on amount and coin selected.</div>
+            </div>
+            
+            <div class="divider"></div>
+            
+            <div class="subsection-title">Custom Date & Time</div>
+            <div style="font-size: 14px; color: #b7bdc6; margin-bottom: 10px;">Set a custom timestamp for the receipt</div>
+            
+            <div class="form-group">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <input type="date" id="transactionDate">
+                    <input type="time" id="transactionTime">
+                </div>
+            </div>
+            
+            <button class="generate-btn" onclick="generateReceipt()">Generate Receipt</button>
+        </div>
+        
+        <div class="receipt-container" id="receiptContainer">
+            <div class="receipt">
+                <div class="receipt-header">
+                    <div class="receipt-title">Deposit Details</div>
+                    <div class="receipt-amount" id="receiptAmount">+500000 BTC</div>
+                    <div class="receipt-status">
+                        <span>✅ Completed</span>
+                    </div>
+                    <div class="status-description">
+                        Crypto transferred into Binance. Your funds have been successfully deposited.
+                    </div>
+                    <a href="#" class="help-link">Why hasn't my deposit arrived?</a>
+                </div>
+                
+                <div class="receipt-divider"></div>
+                
+                <div class="receipt-details">
+                    <div class="detail-section">
+                        <div class="detail-section-title">Network</div>
+                        <table class="detail-table">
+                            <tr>
+                                <td class="detail-label"></td>
+                                <td class="detail-value network-label" id="networkCrypto">BTC</td>
+                            </tr>
+                            <tr>
+                                <td class="detail-label" style="vertical-align: top;">Deposit Address</td>
+                                <td class="detail-value">
+                                    <span id="detailAddress">Jsjsjsjihsgssgsggggg3939399</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="detail-label total-label">Total</td>
+                                <td class="detail-value">
+                                    <div class="address-block" id="addressHash">
+                                        <span class="hash-line">9137c8b5c8aa0517b41227076953</span>
+                                        <span class="hash-line">8c0694715fd5615e2e97ced4a53ce</span>
+                                        <span class="hash-line">f7bb2f</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="detail-label">Deposit Amount</td>
+                                <td class="detail-value" id="detailAmount">500000 BTC</td>
+                            </tr>
+                            <tr>
+                                <td class="detail-label">Network fee</td>
+                                <td class="detail-value" id="detailFee">10 BTC</td>
+                            </tr>
+                            <tr>
+                                <td class="detail-label">Deposit Wallet</td>
+                                <td class="detail-value">Spot Wallet</td>
+                            </tr>
+                            <tr>
+                                <td class="detail-label">Date</td>
+                                <td class="detail-value" id="detailDateTime">2025-11-11 03:50:37</td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <div class="detail-section">
+                        <div class="detail-section-title">Scan Report</div>
+                    </div>
+                </div>
+                
+                <div class="receipt-actions">
+                    <button class="save-address-btn">Save Address</button>
+                    <button class="back-btn" onclick="showForm()">← Back to Generator</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentCrypto = 'BTC';
+        const cryptoData = {
+            'BTC': { name: 'Bitcoin', symbol: '₿', fee: 0.0005 },
+            'ETH': { name: 'Ethereum', symbol: '⟠', fee: 0.01 },
+            'USDT': { name: 'Tether', symbol: '₮', fee: 1 },
+            'BNB': { name: 'Binance Coin', symbol: 'B', fee: 0.0001 },
+            'ADA': { name: 'Cardano', symbol: 'A', fee: 1 },
+            'SOL': { name: 'Solana', symbol: 'S', fee: 0.0001 }
+        };
+        
+        function selectCrypto(crypto) {
+            currentCrypto = crypto;
+            document.querySelectorAll('.crypto-option').forEach(option => {
+                option.classList.remove('active');
+            });
+            document.querySelector(`.crypto-option[data-crypto="${crypto}"]`).classList.add('active');
+            
+            // Update network fee based on selected cryptocurrency
+            document.getElementById('networkFee').value = cryptoData[crypto].fee;
+        }
+        
+        function generateReceipt() {
+            // Get form values
+            const depositAddress = document.getElementById('depositAddress').value || 'Jsjsjsjihsgssgsggggg3939399';
+            const amount = parseFloat(document.getElementById('amount').value) || 500000;
+            const networkFee = parseFloat(document.getElementById('networkFee').value) || 10;
+            
+            // Get date and time or use default from screenshot
+            let dateInput = document.getElementById('transactionDate').value;
+            let timeInput = document.getElementById('transactionTime').value;
+            
+            let displayDateTime;
+            
+            if (dateInput && timeInput) {
+                const dateObj = new Date(dateInput + 'T' + timeInput);
+                displayDateTime = dateObj.getFullYear() + '-' + 
+                                (dateObj.getMonth() + 1).toString().padStart(2, '0') + '-' + 
+                                dateObj.getDate().toString().padStart(2, '0') + ' ' + 
+                                dateObj.getHours().toString().padStart(2, '0') + ':' + 
+                                dateObj.getMinutes().toString().padStart(2, '0') + ':' + 
+                                dateObj.getSeconds().toString().padStart(2, '0');
+            } else {
+                // Use default from screenshot
+                displayDateTime = '2025-11-11 03:50:37';
+            }
+            
+            // Format amount with commas
+            const formattedAmount = amount.toLocaleString();
+            
+            // Update receipt display
+            document.getElementById('receiptAmount').textContent = `+${formattedAmount} ${currentCrypto}`;
+            document.getElementById('networkCrypto').textContent = currentCrypto;
+            document.getElementById('detailAddress').textContent = depositAddress;
+            document.getElementById('detailAmount').textContent = `${formattedAmount} ${currentCrypto}`;
+            document.getElementById('detailFee').textContent = `${networkFee} ${currentCrypto}`;
+            document.getElementById('detailDateTime').textContent = displayDateTime;
+            
+            // Generate random hash (matching screenshot format)
+            document.getElementById('addressHash').innerHTML = 
+                '<span class="hash-line">9137c8b5c8aa0517b41227076953</span>' +
+                '<span class="hash-line">8c0694715fd5615e2e97ced4a53ce</span>' +
+                '<span class="hash-line">f7bb2f</span>';
+            
+            // Show receipt and hide form
+            document.getElementById('formSection').style.display = 'none';
+            document.getElementById('receiptContainer').style.display = 'block';
+        }
+        
+        function showForm() {
+            document.getElementById('receiptContainer').style.display = 'none';
+            document.getElementById('formSection').style.display = 'block';
+        }
+        
+        // Set default date to today
+        document.getElementById('transactionDate').valueAsDate = new Date();
+        
+        // Set default time to current time
+        const now = new Date();
+        document.getElementById('transactionTime').value = 
+            now.getHours().toString().padStart(2, '0') + ':' + 
+            now.getMinutes().toString().padStart(2, '0');
+    </script>
+</body>
+</html>

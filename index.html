@@ -1,0 +1,361 @@
+<!<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shadow Nexus | Anonymous Dashboard</title>
+  <style>
+    /* Body & background */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #0c0c0c, #1a1a2e, #16213e);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Animated background particles */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      opacity: 0.3;
+    }
+
+    .particle {
+      position: absolute;
+      background: rgba(100, 255, 218, 0.6);
+      border-radius: 50%;
+      animation: float 15s infinite linear;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0) translateX(0); }
+      25% { transform: translateY(-20px) translateX(20px); }
+      50% { transform: translateY(-40px) translateX(0); }
+      75% { transform: translateY(-20px) translateX(-20px); }
+      100% { transform: translateY(0) translateX(0); }
+    }
+
+    /* Header */
+    header {
+      text-align: center;
+      padding: 40px 20px 30px;
+      position: relative;
+    }
+
+    .title {
+      font-size: 3.2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #64ffda, #00b4db, #a8ff78);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: 0 0 30px rgba(100, 255, 218, 0.3);
+      margin-bottom: 10px;
+      letter-spacing: 2px;
+    }
+
+    .subtitle {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 1.1rem;
+      font-weight: 300;
+      letter-spacing: 1px;
+    }
+
+    /* Glow effect */
+    .glow {
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(100, 255, 218, 0.2) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: -1;
+      filter: blur(40px);
+    }
+
+    /* Container for cards */
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      padding: 30px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* Card styling */
+    .card {
+      position: relative;
+      height: 160px;
+      border-radius: 16px;
+      background: rgba(15, 15, 25, 0.7);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(100, 255, 218, 0.1);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #64ffda, transparent);
+      transform: translateX(-100%);
+      transition: transform 0.6s;
+    }
+
+    .card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 15px 40px rgba(100, 255, 218, 0.2);
+      border-color: rgba(100, 255, 218, 0.3);
+    }
+
+    .card:hover::before {
+      transform: translateX(100%);
+    }
+
+    /* Button styling */
+    .card a {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      text-decoration: none;
+      color: white;
+      font-weight: 600;
+      font-size: 1.1rem;
+      border-radius: 16px;
+      transition: all 0.3s ease;
+      padding: 20px;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .card-icon {
+      font-size: 2.2rem;
+      margin-bottom: 12px;
+      filter: drop-shadow(0 0 8px currentColor);
+    }
+
+    .card:hover .card-icon {
+      animation: bounce 0.6s ease;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    /* Different button colors with gradients */
+    .btn1 { 
+      background: linear-gradient(135deg, rgba(255, 106, 0, 0.15), rgba(238, 9, 121, 0.15));
+      color: #ff6a00;
+    }
+    .btn2 { 
+      background: linear-gradient(135deg, rgba(86, 171, 47, 0.15), rgba(168, 224, 99, 0.15));
+      color: #56ab2f;
+    }
+    .btn3 { 
+      background: linear-gradient(135deg, rgba(54, 209, 220, 0.15), rgba(91, 134, 229, 0.15));
+      color: #36d1dc;
+    }
+    .btn4 { 
+      background: linear-gradient(135deg, rgba(255, 78, 80, 0.15), rgba(249, 212, 35, 0.15));
+      color: #ff4e50;
+    }
+    .btn5 { 
+      background: linear-gradient(135deg, rgba(247, 151, 30, 0.15), rgba(255, 210, 0, 0.15));
+      color: #f7971e;
+    }
+    .btn6 { 
+      background: linear-gradient(135deg, rgba(0, 198, 255, 0.15), rgba(0, 114, 255, 0.15));
+      color: #00c6ff;
+    }
+    .btn7 { 
+      background: linear-gradient(135deg, rgba(255, 81, 47, 0.15), rgba(221, 36, 118, 0.15));
+      color: #ff512f;
+    }
+    .btn8 { 
+      background: linear-gradient(135deg, rgba(127, 0, 255, 0.15), rgba(225, 0, 255, 0.15));
+      color: #7f00ff;
+    }
+
+    /* Hover effects for buttons */
+    .card:hover .btn1 { background: linear-gradient(135deg, rgba(255, 106, 0, 0.25), rgba(238, 9, 121, 0.25)); }
+    .card:hover .btn2 { background: linear-gradient(135deg, rgba(86, 171, 47, 0.25), rgba(168, 224, 99, 0.25)); }
+    .card:hover .btn3 { background: linear-gradient(135deg, rgba(54, 209, 220, 0.25), rgba(91, 134, 229, 0.25)); }
+    .card:hover .btn4 { background: linear-gradient(135deg, rgba(255, 78, 80, 0.25), rgba(249, 212, 35, 0.25)); }
+    .card:hover .btn5 { background: linear-gradient(135deg, rgba(247, 151, 30, 0.25), rgba(255, 210, 0, 0.25)); }
+    .card:hover .btn6 { background: linear-gradient(135deg, rgba(0, 198, 255, 0.25), rgba(0, 114, 255, 0.25)); }
+    .card:hover .btn7 { background: linear-gradient(135deg, rgba(255, 81, 47, 0.25), rgba(221, 36, 118, 0.25)); }
+    .card:hover .btn8 { background: linear-gradient(135deg, rgba(127, 0, 255, 0.25), rgba(225, 0, 255, 0.25)); }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.9rem;
+      margin-top: 20px;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .container {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        padding: 20px;
+        gap: 20px;
+      }
+      
+      .title {
+        font-size: 2.5rem;
+      }
+      
+      .card {
+        height: 140px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+      
+      .title {
+        font-size: 2rem;
+      }
+      
+      header {
+        padding: 30px 15px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Animated background particles -->
+  <div class="particles" id="particles"></div>
+
+  <header>
+    <div class="glow"></div>
+    <h1 class="title">SHADOW NEXUS</h1>
+    <p class="subtitle">ANONYMOUS OPERATIONS DASHBOARD</p>
+  </header>
+
+  <div class="container">
+    <div class="card">
+      <a href="Paypal.html" target="_blank" class="btn1">
+        <div class="card-icon">💰</div>
+        PAYPAL RECEIPT
+      </a>
+    </div>
+    <div class="card">
+      <a href="Cashapp.html" target="_blank" class="btn2">
+        <div class="card-icon">💸</div>
+        CASHAPP RECEIPT
+      </a>
+    </div>
+    <div class="card">
+      <a href="binance.html" target="_blank" class="btn3">
+        <div class="card-icon">₿</div>
+        BINANCE TOOLS
+      </a>
+    </div>
+    <div class="card">
+      <a href="Cyber.html" target="_blank" class="btn4">
+        <div class="card-icon">🛡️</div>
+        CYBER TOOLS
+      </a>
+    </div>
+    <div class="card">
+      <a href="Connect.html" target="_blank" class="btn5">
+        <div class="card-icon">🔗</div>
+        JOIN THE NETWORK
+      </a>
+    </div>
+    <div class="card">
+      <a href="#" target="_blank" class="btn6">
+        <div class="card-icon">🌐</div>
+        SECURE CHAT
+      </a>
+    </div>
+    <div class="card">
+      <a href="Cardmaster.html" target="_blank" class="btn7">
+        <div class="card-icon">🔒</div>
+        CARDIING TOOLS
+      </a>
+    </div>
+    <div class="card">
+      <a href="#" target="_blank" class="btn8">
+        <div class="card-icon">⚡</div>
+        SPEED TEST
+      </a>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2024 SHADOW NEXUS | SECURE • ANONYMOUS • UNTRACEABLE
+  </footer>
+
+  <script>
+    // Create animated background particles
+    function createParticles() {
+      const particlesContainer = document.getElementById('particles');
+      const particleCount = 15;
+      
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        
+        // Random size and position
+        const size = Math.random() * 6 + 2;
+        const posX = Math.random() * 100;
+        const posY = Math.random() * 100;
+        const delay = Math.random() * 15;
+        
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.left = `${posX}%`;
+        particle.style.top = `${posY}%`;
+        particle.style.animationDelay = `${delay}s`;
+        
+        particlesContainer.appendChild(particle);
+      }
+    }
+
+    // Initialize particles when page loads
+    document.addEventListener('DOMContentLoaded', createParticles);
+
+    // Add click animation to cards
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('click', function() {
+        this.style.transform = 'translateY(-8px) scale(1.02)';
+        setTimeout(() => {
+          this.style.transform = 'translateY(-8px) scale(1.02)';
+        }, 150);
+      });
+    });
+  </script>
+
+</body>
+</html>

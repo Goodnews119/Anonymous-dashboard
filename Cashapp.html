@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cash App Receipt Generator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+        
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #000000;
+            --card-bg: #f8f9fa;
+            --primary: #00d632;
+            --border-color: #e0e0e0;
+            --section-bg: #ffffff;
+        }
+        
+        .dark-mode {
+            --bg-color: #121212;
+            --text-color: #ffffff;
+            --card-bg: #1e1e1e;
+            --primary: #00d632;
+            --border-color: #333333;
+            --section-bg: #2d2d2d;
+        }
+        
+        body {
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        
+        .header p {
+            font-size: 14px;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+        
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 8px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            color: var(--text-color);
+        }
+        
+        .form-section {
+            background: var(--section-bg);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--text-color);
+        }
+        
+        .subsection-title {
+            font-size: 14px;
+            font-weight: 500;
+            margin: 20px 0 10px 0;
+            opacity: 0.8;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 6px;
+            color: var(--text-color);
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 14px;
+            background: var(--card-bg);
+            color: var(--text-color);
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 8px;
+            font-size: 12px;
+            color: var(--text-color);
+            opacity: 0.8;
+            line-height: 1.4;
+        }
+        
+        .checkbox-group input {
+            margin-right: 8px;
+            margin-top: 2px;
+        }
+        
+        .divider {
+            height: 1px;
+            background: var(--border-color);
+            margin: 20px 0;
+        }
+        
+        .mode-selector {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .mode-option {
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: var(--card-bg);
+        }
+        
+        .mode-option.active {
+            border-color: var(--primary);
+            background: rgba(0, 214, 50, 0.1);
+        }
+        
+        .generate-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        
+        .generate-btn:hover {
+            background: #00b32a;
+            transform: translateY(-1px);
+        }
+        
+        .receipt-container {
+            display: none;
+            background: var(--section-bg);
+            border-radius: 12px;
+            padding: 0;
+            margin-top: 20px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+        
+        .receipt {
+            background: var(--section-bg);
+            color: var(--text-color);
+        }
+        
+        .receipt-header {
+            padding: 30px 20px 25px 20px;
+            text-align: center;
+            background: var(--card-bg);
+            position: relative;
+        }
+        
+        .avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #00d632;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0 auto 20px auto;
+        }
+        
+        .receipt-amount {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        
+        .receipt-description {
+            font-size: 16px;
+            opacity: 0.8;
+            line-height: 1.4;
+        }
+        
+        .receipt-status {
+            padding: 20px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: 600;
+            background: var(--card-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .status-completed {
+            color: #00d632;
+        }
+        
+        .status-pending {
+            color: #ff9500;
+        }
+        
+        .status-failed {
+            color: #ff3b30;
+        }
+        
+        .receipt-details {
+            padding: 20px;
+        }
+        
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .detail-label {
+            font-weight: 500;
+            opacity: 0.8;
+        }
+        
+        .detail-value {
+            font-weight: 600;
+            text-align: right;
+        }
+        
+        .receipt-actions {
+            padding: 25px 20px;
+            text-align: center;
+            background: var(--card-bg);
+        }
+        
+        .view-receipt-btn {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: block;
+            font-size: 16px;
+        }
+        
+        .support-section {
+            text-align: center;
+        }
+        
+        .support-title {
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        
+        .close-btn {
+            background: var(--card-bg);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            padding: 12px 24px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .close-btn:hover {
+            background: var(--border-color);
+        }
+        
+        .back-btn {
+            background: var(--card-bg);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 15px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .back-btn:hover {
+            background: var(--border-color);
+        }
+        
+        .status-icon {
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body class="light-mode">
+    <button class="theme-toggle" onclick="toggleTheme()">🌙 Dark Mode</button>
+    
+    <div class="container">
+        <div class="header">
+            <h1>Generate Cash App Receipt</h1>
+            <p>Create professional peer-to-peer payment receipts</p>
+        </div>
+        
+        <div class="form-section" id="formSection">
+            <div class="section-title">Recipient Information</div>
+            <p class="subsection-title">Enter recipient details</p>
+            
+            <div class="form-group">
+                <label>Recipient Cashtag</label>
+                <input type="text" id="recipientCashtag" placeholder="$R3455gfr" value="$R3455gfr">
+            </div>
+            
+            <div class="checkbox-group">
+                <input type="checkbox" id="check1" checked>
+                <label for="check1">Cash App cashing without the $ symbol</label>
+            </div>
+            
+            <div class="divider"></div>
+            
+            <div class="section-title">Transaction Details</div>
+            <p class="subsection-title">Payment information and settings</p>
+            
+            <div class="form-group">
+                <label>Amount (USD)</label>
+                <input type="number" id="amount" placeholder="80000" min="1" max="999999" value="80000">
+            </div>
+            
+            <div class="checkbox-group">
+                <input type="checkbox" id="check2" checked>
+                <label for="check2">No currency symbols, just numbers</label>
+            </div>
+            
+            <div class="form-group">
+                <label>Status</label>
+                <select id="status">
+                    <option value="Completed">Completed</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Failed">Failed</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>Transaction Note</label>
+                <input type="text" id="transactionNote" placeholder="Tuuuuuhff" value="Tuuuuuhff">
+            </div>
+            
+            <div class="checkbox-group">
+                <input type="checkbox" id="check3" checked>
+                <label for="check3">Add emojis and personal touches</label>
+            </div>
+            
+            <div class="form-group">
+                <label>Transaction Mode</label>
+                <p class="subsection-title">Select transaction type</p>
+                <div class="mode-selector">
+                    <div class="mode-option active" data-mode="send" onclick="selectMode('send')">
+                        Send
+                    </div>
+                    <div class="mode-option" data-mode="request" onclick="selectMode('request')">
+                        Request
+                    </div>
+                </div>
+                <p class="subsection-title" style="margin-top: 10px;">Outgoing payment</p>
+            </div>
+            
+            <div class="divider"></div>
+            
+            <div class="section-title">Custom Date & Time</div>
+            <p class="subsection-title">Set a custom timestamp for the receipt</p>
+            
+            <div class="form-group">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div>
+                        <label>Date</label>
+                        <input type="date" id="transactionDate">
+                    </div>
+                    <div>
+                        <label>Time</label>
+                        <input type="time" id="transactionTime">
+                    </div>
+                </div>
+            </div>
+            
+            <button class="generate-btn" onclick="generateReceipt()">Generate Receipt</button>
+        </div>
+        
+        <div class="receipt-container" id="receiptContainer">
+            <div class="receipt">
+                <div class="receipt-header">
+                    <div class="avatar" id="recipientAvatar">R</div>
+                    <div class="receipt-amount" id="receiptAmount">$80,000</div>
+                    <div class="receipt-description" id="receiptDescription">Payment to $R3455gfr<br>Tuuuuuhff</div>
+                </div>
+                
+                <div class="divider"></div>
+                
+                <div class="receipt-status" id="receiptStatus">
+                    <span class="status-icon" id="statusIcon">💷</span>
+                    <span id="statusText">Completed</span>
+                </div>
+                
+                <div class="receipt-details">
+                    <div class="detail-row">
+                        <span class="detail-label">To</span>
+                        <span class="detail-value" id="detailTo">$R3455gfr</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Amount</span>
+                        <span class="detail-value" id="detailAmount">$80,000</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Transaction Type</span>
+                        <span class="detail-value" id="detailType">Payment between friends</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Note</span>
+                        <span class="detail-value" id="detailNote">Tuuuuuhff</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Status</span>
+                        <span class="detail-value" id="detailStatus">💷 Completed</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Date</span>
+                        <span class="detail-value" id="detailDate">Nov 11, 2025</span>
+                    </div>
+                    <div class="detail-row" style="border-bottom: none;">
+                        <span class="detail-label">Transaction ID</span>
+                        <span class="detail-value" id="detailTransactionId">CA-20251111511557</span>
+                    </div>
+                </div>
+                
+                <div class="divider"></div>
+                
+                <div class="receipt-actions">
+                    <a href="#" class="view-receipt-btn">View Receipt</a>
+                    
+                    <div class="support-section">
+                        <div class="support-title">Cash App Support</div>
+                        <button class="close-btn" onclick="showForm()">Close</button>
+                    </div>
+                </div>
+                
+                <div style="padding: 20px;">
+                    <button class="back-btn" onclick="showForm()">← Back to Generator</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentMode = 'send';
+        
+        function toggleTheme() {
+            const body = document.body;
+            const toggleBtn = document.querySelector('.theme-toggle');
+            
+            if (body.classList.contains('dark-mode')) {
+                body.classList.remove('dark-mode');
+                toggleBtn.textContent = '🌙 Dark Mode';
+            } else {
+                body.classList.add('dark-mode');
+                toggleBtn.textContent = '☀️ Light Mode';
+            }
+        }
+        
+        function selectMode(mode) {
+            currentMode = mode;
+            document.querySelectorAll('.mode-option').forEach(option => {
+                option.classList.remove('active');
+            });
+            document.querySelector(`.mode-option[data-mode="${mode}"]`).classList.add('active');
+        }
+        
+        function generateReceipt() {
+            // Get form values
+            const recipientCashtag = document.getElementById('recipientCashtag').value || '$R3455gfr';
+            const amount = parseInt(document.getElementById('amount').value) || 80000;
+            const status = document.getElementById('status').value;
+            const transactionNote = document.getElementById('transactionNote').value || 'Tuuuuuhff';
+            
+            // Get first character for avatar (remove $ if present)
+            const firstChar = recipientCashtag.replace('$', '').charAt(0).toUpperCase();
+            
+            // Get date and time or use current
+            let dateInput = document.getElementById('transactionDate').value;
+            
+            let displayDate;
+            
+            if (dateInput) {
+                const dateObj = new Date(dateInput);
+                displayDate = dateObj.toLocaleDateString('en-US', { 
+                    year: 'numeric', 
+                    month: 'short', 
+                    day: 'numeric' 
+                });
+            } else {
+                // Default to current date
+                const now = new Date();
+                displayDate = now.toLocaleDateString('en-US', { 
+                    year: 'numeric', 
+                    month: 'short', 
+                    day: 'numeric' 
+                });
+            }
+            
+            // Generate random transaction ID
+            const transactionId = generateTransactionId();
+            
+            // Format amount with commas
+            const formattedAmount = `$${amount.toLocaleString()}`;
+            
+            // Set transaction type based on mode
+            const transactionType = currentMode === 'send' ? 'Payment between friends' : 'Payment request';
+            
+            // Set status with appropriate icon and styling
+            let statusIcon, statusText, statusClass, detailStatus;
+            
+            switch(status) {
+                case 'Completed':
+                    statusIcon = '✅';
+                    statusText = 'Completed';
+                    statusClass = 'status-completed';
+                    detailStatus = '💷 Completed';
+                    break;
+                case 'Pending':
+                    statusIcon = '⏳';
+                    statusText = 'Pending';
+                    statusClass = 'status-pending';
+                    detailStatus = '⏳ Pending';
+                    break;
+                case 'Failed':
+                    statusIcon = '❌';
+                    statusText = 'Failed';
+                    statusClass = 'status-failed';
+                    detailStatus = '❌ Failed';
+                    break;
+            }
+            
+            // Update receipt display
+            document.getElementById('recipientAvatar').textContent = firstChar;
+            document.getElementById('receiptAmount').textContent = formattedAmount;
+            document.getElementById('receiptDescription').innerHTML = `Payment to ${recipientCashtag}<br>${transactionNote}`;
+            
+            // Update status with icon and styling
+            const statusElement = document.getElementById('receiptStatus');
+            statusElement.className = 'receipt-status ' + statusClass;
+            document.getElementById('statusIcon').textContent = statusIcon;
+            document.getElementById('statusText').textContent = statusText;
+            
+            document.getElementById('detailTo').textContent = recipientCashtag;
+            document.getElementById('detailAmount').textContent = formattedAmount;
+            document.getElementById('detailType').textContent = transactionType;
+            document.getElementById('detailNote').textContent = transactionNote;
+            document.getElementById('detailStatus').textContent = detailStatus;
+            document.getElementById('detailDate').textContent = displayDate;
+            document.getElementById('detailTransactionId').textContent = transactionId;
+            
+            // Show receipt and hide form
+            document.getElementById('formSection').style.display = 'none';
+            document.getElementById('receiptContainer').style.display = 'block';
+        }
+        
+        function showForm() {
+            document.getElementById('receiptContainer').style.display = 'none';
+            document.getElementById('formSection').style.display = 'block';
+        }
+        
+        function generateTransactionId() {
+            const now = new Date();
+            const timestamp = now.getFullYear().toString() + 
+                            (now.getMonth() + 1).toString().padStart(2, '0') + 
+                            now.getDate().toString().padStart(2, '0') + 
+                            now.getHours().toString().padStart(2, '0') + 
+                            now.getMinutes().toString().padStart(2, '0') + 
+                            now.getSeconds().toString().padStart(2, '0');
+            
+            const randomChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let randomPart = '';
+            for (let i = 0; i < 6; i++) {
+                randomPart += randomChars.charAt(Math.floor(Math.random() * randomChars.length));
+            }
+            
+            return `CA-${timestamp}${randomPart}`;
+        }
+        
+        // Set default date to today
+        document.getElementById('transactionDate').valueAsDate = new Date();
+        
+        // Set default time to current time
+        const now = new Date();
+        document.getElementById('transactionTime').value = 
+            now.getHours().toString().padStart(2, '0') + ':' + 
+            now.getMinutes().toString().padStart(2, '0');
+    </script>
+</body>
+</html>
